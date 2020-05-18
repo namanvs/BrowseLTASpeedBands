@@ -39,7 +39,7 @@ I could have put this in the setup script but perhaps my Roads.tsv file will bec
 
 TRAFFIC Table
 |road_id|timestamp|speedband|
-|--|----|--------|-----|---|
+|-------|---------|---------|
 |INTEGER|DATETIME (sqlite3 format, defaults to current timestamp)|INTEGER|
 
 ### 2. Data Collection Script
