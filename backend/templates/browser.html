@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2> Browsing Roads</h2>
+  <p> Click on a road to view a graph of speedbands against time</p>
+  <div margin: auto id="vue-entry" class = "container">
+    <div class="row">
+      <div class = "col">
+        <table class="table">
+          <thead class ="thead-dark">
+            <tr class = "d-flex">
+              <th class="col-2" scope="col">Road ID</th>
+              <th class="col-3" scope="col">Name</th>
+              <th class="col-1" scope="col">Category</th>
+              <th class="col-6" scope="col">Preview</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for tuple in data %}
+            <tr class = "d-flex">
+              <th scope="row" class = "col-2">{{ tuple[0] }}</th>
+              <td class = "col-2">{{ tuple[1] }}</td>
+              <td class = "col-2">{{tuple[2]}}</td>
+              <td class = "col-6">
+                <button type="button" class="btn btn-primary" v-on:click="insertGraph({{tuple[0]}})">Preview</button>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <div class="container position-fixed">
+          <div class="row">
+            <img  v-bind:src="imageURL" v-if="previewOn"/>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-primary" v-if="previewOn" v-on:click="getRoadHistory()">Download History For This Road</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <a href="{{url_for('export')}}"><button type="button" class="btn btn-primary btn-lg">DOWNLOAD ENTIRE DATASET</button></a>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="{{url_for('static', filename='browser.js')}}"></script>
+
+
+{% endblock %}

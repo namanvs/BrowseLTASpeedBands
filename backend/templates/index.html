@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2> Dataset Summary</h2>
+  <p> Tracking {{data["numroads"]}} roads</p>
+  <p> Serving data recorded from {{data["earliest"]}} to {{data["latest"]}}</p>
+  <a href="{{url_for('getAllRoads')}}"><button type="button" class="btn btn-primary btn-lg">Browse Dataset</button></a>
+  <a href="{{url_for('export')}}"><button type="button" class="btn btn-primary btn-lg">DOWNLOAD ENTIRE DATASET</button></a>
+
+{% endblock %}
