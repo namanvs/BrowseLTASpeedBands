@@ -3,15 +3,19 @@ import pandas as pd
 import sqlalchemy as db
 import json
 
+#Read API key
+with open('api_key.txt', 'r') as file:
+    API_KEY = file.read().replace('\n', '')
+
 # API Details
 URL = "http://datamall2.mytransport.sg/ltaodataservice/TrafficSpeedBandsv2"
-HEADERS = {"AccountKey": "FRBsrUb0SamDTzAlZ41SIA==", "accept":"application/json"}
+HEADERS = {"AccountKey": API_KEY, "accept":"application/json"}
 
 # Table Names
 TRAFFIC = "TRAFFIC"
 ROADS = "ROADS"
 
-engine = db.create_engine('sqlite:////mnt/dietpi_userdata/Projects/LTA Traffic Monitor/trafficmonitor')
+engine = db.create_engine('sqlite:///trafficmonitor')
 
 # Hit API
 r = rq.get(url = URL, headers = HEADERS)

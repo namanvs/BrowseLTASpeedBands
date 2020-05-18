@@ -93,7 +93,7 @@ def getRoadHistory(id):
     with engine.connect() as connection:
         result = connection.execute(history_query, p1 = id).fetchall()
         for row in result:
-            x.append(row["timestamp"][2:-3]) #truncate seconds
+            x.append(row["timestamp"][10:-3]) #truncate YYYY-MM-DD, truncate seconds
             y.append(row["speedband"])
     return json.dumps(y)
 
