@@ -18,29 +18,11 @@ This project collects information for traffic speeds on Singapore's road network
 
 ## Setup
 ### 1. Databases
-The first thing to set up after pulling this repo is the database. Do this in the root directory of the repo by issuing:
+I used require a multi-step setup process involving some manual command execution, but now all you need to do is do is:
 ```
-sqlite3 trafficmonitor < setupdbs.sql
+python setup.py
 ```
-This creates two tables in your database, called "ROADS" and "TRAFFIC".
-
-ROADS Table
-|id|name|category|start|end|
-|--|----|--------|-----|---|
-|INTEGER|STRING|CHARACTER|STRING (a pair of lat, lon)|STRING (a pair of lat, lon)|
-
-I have provided a `Roads.tsv` file you can use to populate the "ROADS" table by doing the following:
-```
-sqlite3 trafficmonitor 
-sqlite> .separator "\t"
-sqlite> .import Roads.tsv ROADS
-```
-I could have put this in the setup script but perhaps my Roads.tsv file will become out-of-date as Singapore continues to grow.
-
-TRAFFIC Table
-|road_id|timestamp|speedband|
-|-------|---------|---------|
-|INTEGER|DATETIME (sqlite3 format, defaults to current timestamp)|INTEGER|
+This script creates a database file called `trafficmonitor` with tables "ROADS" and "TRAFFIC". "ROADS" is pre-populated from the LTA API and "TRAFFIC" will store the time-series data that this project collects.
 
 ### 2. Data Collection Script
 The next task is to collect data to populate the TRAFFIC Table. `ingest.py` does this for you, but you need to supply your own API key, which you can obtain [here](https://www.mytransport.sg/content/mytransport/home/dataMall/request-for-api.html). Place the key LTA sends you in a file named `api_key.txt` in the root of the repo folder.
@@ -71,7 +53,7 @@ The dataset browser offers the following functions:
 2. Browse a table of roads and preview their speedband history for the last 24 hours with an option to download the speedband history for that road.
 
 ## TODO
-- [] Write a Python script that automates database setup and pre-population of the ROADS table.
+- [x] Write a Python script that automates database setup and pre-population of the ROADS table.
 - [] Rework the visual interface to dynamically generate interactive graphs with timestamp filtering (I'm new to Web stuff so this will take some time)
 - [] Visualize completeness of the dataset. What if the Pi goes down for some time? Is there some way to check if my dataset is still complete? LTA's API is completely real-time and they do not publish complete historical data.
 - [] Email LTA and question why data for many other major artery roads are missing. Singapore has 10 major expressways and only 1 of them is reported in this dataset.
